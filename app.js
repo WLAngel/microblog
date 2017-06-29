@@ -42,7 +42,12 @@ app.get('/list', function (req, res) {
 app.get('/:id', function(req, res) {
   var id = req.params.id
   route.getArticle({ _id: Number(id) }).then(item => {
-    res.render('article', item[0])
+    if(item[0].delete) {
+      res.render('deleted')
+    }
+    else {
+      res.render('article', item[0])
+    }
   })
 })
 
