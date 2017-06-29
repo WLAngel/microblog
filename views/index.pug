@@ -4,13 +4,20 @@ html
     title microblog
     meta(charset='utf-8')
   body
+    h1
+      a(href='/') home
     div
       form(method='POST' action='/create')
-        span title
-          input(type='text' name='title')
-        span author
-          input(type='text' name='author')
-        textarea(rows='4' cols='50' name='body')
+        div
+          span title: 
+            input(type='text' name='title')
+        div
+          span author: 
+            span #{name}
+        div
+          span content: 
+          div
+            textarea(rows='4' cols='50' name='body')
         button(type='submit') submit
     each item in articles
       h1 
