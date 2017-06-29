@@ -1,0 +1,14 @@
+doctype html
+html
+  head
+    title microblog
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    form(method='POST' action='/'+_id+'/delete')
+      button(type='submit') delete
+    h1 #{title}
+    ul
+      li #{author}
+      li #{time}
+    p #{body}

@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title microblog
+    meta(charset='utf-8')
+    link(rel='stylesheet' href='/stylesheets/style.css')
+  body
+    div
+      form(method='POST' action='/create')
+        span title
+          input(type='text' name='title')
+        span author
+          input(type='text' name='author')
+        textarea(rows='4' cols='50' name='body')
+        button(type='submit') submit
+    each item in articles
+      h1 
+        a(href='/'+item.id) #{item.title}
+      ul
+        li #{item.author}
+        li #{item.time}
