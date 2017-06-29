@@ -55,7 +55,6 @@ function getArticle(query) {
 
 function edit(query, body) {
   MongoClient.connect(url).then(function(db) {
-    console.log(query)
     var collection = db.collection('blogs')
     collection.updateOne(query, { $set: { body: body } })
   })
@@ -63,7 +62,6 @@ function edit(query, body) {
 
 function remove(query) {
   MongoClient.connect(url).then(function(db) {
-    console.log(query)
     var collection = db.collection('blogs')
     collection.updateOne(query, { delete: true })
   })

@@ -35,7 +35,6 @@ app.post('/:id/edit', function(req, res) {
 
 app.post('/:id/delete', function(req, res) {
   var id = req.params.id
-  console.log(id)
   route.remove({ _id: Number(id) })
   res.redirect(302, '/')
 })
