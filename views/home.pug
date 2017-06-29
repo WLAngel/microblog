@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title microblog
+    meta(charset='utf-8')
+  body
+    div
+      form(method='POST' action='/enter')
+        span Enter your name
+          input(type='text' name='name')
+        button(type='submit') submit

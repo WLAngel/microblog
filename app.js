@@ -1,4 +1,5 @@
 var express = require('express')
+var cookieParser = require('cookie-parser')
 var path = require('path')
 var route = require('./src/route.js')
 var bodyparser = require('body-parser')
@@ -8,6 +9,14 @@ var app = express()
 
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'pug')
+
+app.use(cookieParser())
+
+app.use(function(req, res, next) {
+
+})
+
+
 
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyparser.json())
@@ -39,7 +48,7 @@ app.post('/:id/delete', function(req, res) {
   res.redirect(302, '/')
 })
 
-app.get('/', function (req, res) {
+app.get('/list', function (req, res) {
   var articles = []
   route.getArticle({ delete: false }).then(item => {
     for(var x = 0; x < item.length; x++) {
@@ -56,6 +65,15 @@ app.get('/', function (req, res) {
   })
 })
 
+app.get('/', function (req, res) {
+
+
+  res.render('home')
+})
+app.post('/enter', function(req, res) {
+
+
+})
 
 
 
