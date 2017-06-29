@@ -1,8 +1,6 @@
 var MongoClient = require('mongodb').MongoClient
 var assert = require('assert');
 
-
-
 module.exports = {
   create: create,
   getArticle: getArticle,
@@ -11,8 +9,6 @@ module.exports = {
 }
 
 var url = 'mongodb://mongod:27017/microblog';
-
-
 
 function create(title, author, body) {
   var id
