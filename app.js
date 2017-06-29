@@ -23,8 +23,14 @@ app.get('/:id', function(req, res) {
 app.post('/create', function(req, res) {
   route.create(req.body.title, req.body.author, req.body.body)
   .then(x => {
-    res.redirect(302, '/'+x)
+    res.redirect(302, '/' + x)
   })
+})
+
+app.post('/:id/edit', function(req, res) {
+  var id = req.params.id
+  route.edit({ _id: Number(id) }, req.body.body)
+  res.redirect(302, '/' + id)
 })
 
 app.post('/:id/delete', function(req, res) {

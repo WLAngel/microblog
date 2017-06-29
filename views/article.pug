@@ -12,3 +12,6 @@ html
       li #{author}
       li #{time}
     p #{body}
+    form(method='POST' action='/'+_id+'/edit')
+      textarea(rows='4' cols='50' name='body')
+      button(type='submit') edit
