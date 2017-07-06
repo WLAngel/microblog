@@ -18,7 +18,7 @@ function create(title, author, body) {
       var collection = db.collection('blogs')
       collection.insertOne({
         _id: x,
-        title: title,
+        title: title || 'untitled',
         author: author,
         body: body,
         time: (new Date()).toString(),
