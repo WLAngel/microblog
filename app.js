@@ -3,6 +3,9 @@ var cookieParser = require('cookie-parser')
 var path = require('path')
 var route = require('./src/route.js')
 var bodyparser = require('body-parser')
+var csrf = require('csurf')
+
+var csrfProtection = csrf({ cookie: true })
 
 var app = express()
 
@@ -20,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
 
-app.get('/list', function (req, res) {
+app.get('/list', csrfProtection, function (req, res) {
   var articles = []
   var name = req.cookies.name
   route.getArticle({ delete: false }).then(item => {
@@ -34,7 +37,8 @@ app.get('/list', function (req, res) {
     }
     res.render('index', {
       articles: articles,
-      name: req.cookies.name
+      name: req.cookies.name,
+      csrfToken: req.csrfToken()
     })
   })
 })
@@ -54,7 +58,7 @@ app.get('/:id', function(req, res) {
   })
 })
 
-app.post('/create', function(req, res) {
+app.post('/create', csrfProtection,  function(req, res) {
   route.create(req.body.title, req.cookies.name, req.body.body)
   .then(x => {
     res.redirect(302, '/' + x)
@@ -81,6 +85,7 @@ app.post('/enter', function(req, res) {
 })
 
 app.get('/', function (req, res) {
+
   res.render('home')
 })
 

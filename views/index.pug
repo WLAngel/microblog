@@ -8,6 +8,7 @@ html
       a(href='/') home
     div
       form(method='POST' action='/create')
+        input(type='hidden' name='_csrf' value=csrfToken)
         div
           span title: 
             input(type='text' name='title')
