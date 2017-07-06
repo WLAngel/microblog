@@ -42,6 +42,9 @@ app.get('/list', function (req, res) {
 app.get('/:id', function(req, res) {
   var id = req.params.id
   route.getArticle({ _id: Number(id) }).then(item => {
+    if(item[0] === undefined) {
+      res.status(404).send('Article not found')
+    }
     if(item[0].delete) {
       res.render('deleted')
     }
