@@ -23,6 +23,17 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyparser.json())
 app.use(bodyparser.urlencoded({ extended: true }))
 
+app.use(csrf({ cookie: true }))
+
+// error handler
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err)
+
+  // handle CSRF token errors here
+  res.status(403)
+  res.send('invalid token')
+})
+
 app.get('/list', csrfProtection, function (req, res) {
   var articles = []
   var name = req.cookies.name
@@ -62,6 +73,8 @@ app.post('/create', csrfProtection,  function(req, res) {
   route.create(req.body.title, req.cookies.name, req.body.body)
   .then(x => {
     res.redirect(302, '/' + x)
+  }).catch(err => {
+    res.status(403).send('invalid token')
   })
 })
 
