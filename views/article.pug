@@ -9,6 +9,7 @@ html
     h1
       a(href='/list') list
     form(method='POST' action='/'+_id+'/delete')
+      input(type='hidden' name='_csrf' value=csrfToken)
       button(type='submit') delete
     h1 #{title}
     ul
@@ -16,5 +17,6 @@ html
       li #{time}
     pre #{body}
     form(method='POST' action='/'+_id+'/edit')
+      input(type='hidden' name='_csrf' value=csrfToken)
       textarea(rows='4' cols='50' name='body')
       button(type='submit') edit

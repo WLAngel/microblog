@@ -27,6 +27,9 @@ app.use(csrf({ cookie: true }))
 
 // error handler
 app.use(function (err, req, res, next) {
+  if(req.method === 'POST' && req.path === '/enter')
+    return next()
+
   if (err.code !== 'EBADCSRFTOKEN') return next(err)
 
   // handle CSRF token errors here
@@ -54,7 +57,7 @@ app.get('/list', csrfProtection, function (req, res) {
   })
 })
 
-app.get('/:id', function(req, res) {
+app.get('/:id', csrfProtection, function(req, res) {
   var id = req.params.id
   route.getArticle({ _id: Number(id) }).then(item => {
     if(item[0] === undefined) {
@@ -64,6 +67,7 @@ app.get('/:id', function(req, res) {
       res.render('deleted')
     }
     else {
+      item[0].csrfToken = req.csrfToken()
       res.render('article', item[0])
     }
   })
@@ -73,18 +77,16 @@ app.post('/create', csrfProtection,  function(req, res) {
   route.create(req.body.title, req.cookies.name, req.body.body)
   .then(x => {
     res.redirect(302, '/' + x)
-  }).catch(err => {
-    res.status(403).send('invalid token')
   })
 })
 
-app.post('/:id/edit', function(req, res) {
+app.post('/:id/edit', csrfProtection, function(req, res) {
   var id = req.params.id
   route.edit({ _id: Number(id) }, req.body.body)
   res.redirect(302, '/' + id)
 })
 
-app.post('/:id/delete', function(req, res) {
+app.post('/:id/delete', csrfProtection, function(req, res) {
   var id = req.params.id
   route.remove({ _id: Number(id) })
   res.redirect(302, '/list')
