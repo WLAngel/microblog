@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node app.js",
+    "start-docker": "docker run -it --rm --link mongod -p 8888:8888 microblog",
+    "build": "docker build -t microblog . && docker run -d --name mongod mongo"
   },
   "keywords": [],
   "author": "",
